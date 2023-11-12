@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Lettre de Candidature</title>
+</head>
+<body>
+    <p>
+        <strong>[Prénom et Nom]</strong><br>
+        [Adresse]<br>
+        [Code postal, Ville]<br>
+        [Téléphone]<br>
+        [Adresse e-mail]<br>
+        [Date]
+    </p>
+
+    <p>
+        Groupe Actual La Teste-de-Buch - 33<br>
+        À l'attention du responsable du recrutement<br>
+        [Adresse de l'entreprise]<br>
+        [Code postal, Ville de l'entreprise]
+    </p>
+
+    <p>
+        <strong>Objet : Candidature au poste de Chef de Projet BE Electronique</strong>
+    </p>
+
+    <p>
+        Madame, Monsieur,
+    </p>
+
+    <p>
+        Passionné par les nouvelles technologies et fort de plus de deux décennies d'expérience en gestion de projets technologiques, je suis enthousiaste à l'idée de rejoindre Groupe Actual en tant que Chef de Projet BE Electronique. Votre offre d'emploi correspond parfaitement à mon parcours professionnel et à ma passion pour l'électronique.
+    </p>
+
+    <p>
+        Mon expérience en gestion de projets technologiques, notamment en tant que fondateur d'Ineov Net Architecture, m'a permis de développer des compétences essentielles en matière de planification, de coordination d'équipes et de respect des délais. J'ai également eu l'occasion de travailler sur des projets variés, de la billettique par QRCode pour Citram Pyrénées à la gestion d'accueil périscolaire en collaboration avec les Francas de Gironde. Mon expertise en développement de solutions sur mesure m'a préparé à relever les défis techniques et à garantir la faisabilité technique et économique des projets, comme le demande le poste de Chef de Projet BE Electronique.
+    </p>
+
+    <p>
+        L'une de mes forces réside dans ma capacité à innover et à repousser les limites de la technologie pour créer des solutions concrètes et impactantes. J'ai récemment été impliqué dans la création d'un robot DJ à partir de déchets électroniques, une expérience qui démontre ma créativité et ma maîtrise des technologies électroniques.
+    </p>
+
+    <p>
+        En outre, mon parcours professionnel m'a permis de développer des compétences en gestion documentaire, en maîtrise de logiciels de CAO/DAO et en suivi de projets, toutes des compétences essentielles pour réussir en tant que Chef de Projet BE Electronique.
+    </p>
+
+    <p>
+        Je suis convaincu que ma passion pour l'électronique, mon expérience en gestion de projets technologiques et ma capacité à travailler en équipe font de moi un candidat idéal pour ce poste. Je suis également enthousiaste à l'idée de contribuer à la croissance de Groupe Actual.
+    </p>
+
+    <p>
+        Je reste à votre disposition pour toute information complémentaire et je serais ravi de discuter de ma candidature de vive voix lors d'un entretien.
+    </p>
+
+    <p>
+        Je vous remercie de l'attention que vous porterez à ma candidature et je vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distinguées.
+    </p>
+
+    <p>
+        Cordialement,<br>
+        [Signature manuscrite (si la lettre est imprimée)]
+    </p>
+</body>
+</html>
