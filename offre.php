@@ -87,7 +87,6 @@ if (isset($_FILES['pdfImage'])) {
     $imgType = $_FILES['pdfImage']['type'];
     $imgSize = $_FILES['pdfImage']['size'];
     $imageFileName = $_FILES['pdfImage']['name'];
-
     if ($imgType !== "image/png") {
         $error = "Le fichier n'est pas une image PNG.";
         logError($error);
@@ -193,10 +192,15 @@ if (!isset($_SESSION['user_id'])) {
             echo "pas de cv encore";
         }
     }
+   
     if ($_SESSION["user_id"]) {
-        $imagecv = "uploads/" . $_SESSION["user_id"] . "_cv_image.png";
+        $imagecv = "uploads/" . $_SESSION["user_id"] . "_cv_image.png".
+        $timestamp = time(); // Obtient le timestamp actuel
+        // Ou utilisez rand() pour un nombre aléatoire : $timestamp = rand();
+        $imageurl = $imagecv . '?nocache=' . $timestamp;
     }
-
+                                                
+                                               
     ?>
     <!-- ======= Hero Section ======= -->
     <form method="post" enctype="multipart/form-data" action="offre.php" id="file-upload-form">
@@ -207,7 +211,7 @@ if (!isset($_SESSION['user_id'])) {
                         <div class="container">
                             <div class="form-group">
                                 <div class="file-container">
-                                    <img src=<?php echo $imagecv; ?> id="imagecv" width=90% alt="Proposez votre CV pour la lettre de motivation"></img><br>
+                                    <img src=<?php echo $imageurl;?> id="imagecv" width=90% alt="Proposez votre CV pour la lettre de motivation"></img><br>
 
                                 </div>
                             </div>

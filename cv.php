@@ -73,7 +73,7 @@ if (isset($_FILES['pdfImage'])) {
     $imgType = $_FILES['pdfImage']['type'];
     $imgSize = $_FILES['pdfImage']['size'];
     $imageFileName = $_FILES['pdfImage']['name'];
-
+    echo "laaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa".$imageFileName;
     if ($imgType !== "image/png") {
         $error = "Le fichier n'est pas une image PNG.";
         logError($error);
@@ -259,7 +259,7 @@ if (isset($_SESSION["user_id"])) {
                         <?php
                         }
                         ?>
-                        <input type="file" value="Fichier" class="cv_input" name="pdf_file" id="pdf_file" accept=".pdf" style="display: none;">
+                        <input type="file" value="Fichier" class="cv_input" name="pdf_file" id="pdf_file" accept=".pdf">
                         <textarea class="cv_input_in" name="cv_input" id="cv_input" rows="7"><?php
                                                                                                 if (isset($_SESSION['cv'])) {
                                                                                                     echo $_SESSION['cv'];
