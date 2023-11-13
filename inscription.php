@@ -2,78 +2,7 @@
 require_once('.config');
 //session_start();
 // Vérifiez si l'utilisateur est déjà connecté, redirigez-le s'il l'est
-
-
-// Traitement de l'inscription
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
-
-    $conn = mysqli_connect($servername, $username, $password, $dbname);
-
-    // Vérification de la connexion
-    if (!$conn) {
-        die("Erreur de connexion à la base de données : " . mysqli_connect_error());
-    }
-
-    $email = $_POST['email'];
-    $password = password_hash($_POST['password'], PASSWORD_BCRYPT); // Hash du mot de passe
-
-    // Vérifiez d'abord si l'adresse e-mail existe déjà
-    $sql_check = "SELECT email FROM user WHERE email = ?";
-    $stmt_check = mysqli_prepare($conn, $sql_check);
-    mysqli_stmt_bind_param($stmt_check, "s", $email);
-    mysqli_stmt_execute($stmt_check);
-    mysqli_stmt_store_result($stmt_check);
-
-    if (mysqli_stmt_num_rows($stmt_check) > 0) {
-        // L'adresse e-mail existe déjà, vous pouvez afficher un message d'erreur
-        $compte_existant = "Cette adresse e-mail est déjà utilisée.";
-        echo "<p class='erreur' align='center'><br>Cette adresse e-mail est déjà utilisée. Merci de vous connecter.<br><br><a href='connection.php' id='customButton' ><i class='bi bi-plugin'></i> Je me connecte</a><a href='index.php' id='customButton' ><i class='bi bi-plugin'></i> Fermer</a><br><br><br></p>";
-    } else {
-        // L'adresse e-mail n'existe pas encore, procédez à l'insertion
-        $sql_insert = "INSERT INTO user (email, password, is_verified, roles) VALUES (?, ?, 0, '[]')";
-        $stmt_insert = mysqli_prepare($conn, $sql_insert);
-        mysqli_stmt_bind_param($stmt_insert, "ss", $email, $password);
-
-        if (mysqli_stmt_execute($stmt_insert)) {
-            // Générez un jeton d'activation
-            $token = bin2hex(random_bytes(32));
-
-            // Stockez le jeton d'activation dans la base de données
-            $sql_update = "UPDATE user SET activation_token = ? WHERE email = ?";
-            $stmt_update = mysqli_prepare($conn, $sql_update);
-            mysqli_stmt_bind_param($stmt_update, "ss", $token, $email);
-            mysqli_stmt_execute($stmt_update);
-            // Fermez les déclarations
-            mysqli_stmt_close($stmt_check);
-            mysqli_stmt_close($stmt_insert);
-            mysqli_stmt_close($stmt_update);
-            // Adresse e-mail de retour (Return-Path)
-            // En-têtes de l'e-mail
-            $headers = "From: $return_path\r\n";
-            $headers .= "Reply-To: $return_path\r\n";
-            $headers .= "Return-Path: $return_path\r\n";
-            $headers .= "MIME-Version: 1.0\r\n";
-            $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
-
-            // Envoyez un email de confirmation à l'utilisateur avec le lien d'activation
-            $subject = "Confirmez votre compte";
-            $message = "Cliquez sur le lien suivant pour activer votre compte : http://localhost/activate.php?token=$token";
-
-            // Utilisez l'adresse de retour dans la fonction mail()
-            mail($email, $subject, $message, $headers);
-        } else {
-            // Une erreur s'est produite lors de l'insertion
-            echo "Une erreur s'est produite lors de la création du compte.";
-        }
-    }
-
-
-
-    // Fermeture de la connexion à la base de données
-    mysqli_close($conn);
-}
 ?>
-
 <!DOCTYPE html>
 <html>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -131,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
                         </div>
                     </div>
                     <div class="col-lg-6 d-lg-flex flex-lg-column align-items-stretch order-1 order-lg-2 hero-img" data-aos="fade-up">
-                        <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary" method="post" action="inscription.php">
+                        <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary" method="post" action="connection.php">
                             <div class="form-floating mb-3">
                                 <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email">
                                 <label for="floatingInput">Email address</label>

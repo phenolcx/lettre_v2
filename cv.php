@@ -73,7 +73,7 @@ if (isset($_FILES['pdfImage'])) {
     $imgType = $_FILES['pdfImage']['type'];
     $imgSize = $_FILES['pdfImage']['size'];
     $imageFileName = $_FILES['pdfImage']['name'];
-    echo "laaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa".$imageFileName;
+    echo "laaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" . $imageFileName;
     if ($imgType !== "image/png") {
         $error = "Le fichier n'est pas une image PNG.";
         logError($error);
@@ -247,11 +247,13 @@ if (isset($_SESSION["user_id"])) {
                         if (isset($_SESSION["cv"]) && $_SESSION["cv"] != "") { ?>
                             <p><button id="submit" class="download-btn">Utiliser ce CV</button> <button type="button" id="cv_new">Charger un nouveau CV</button></p>
                             <img src=<?php echo $imagecv; ?> id="imagecv" width=90% alt="Proposez votre CV pour la lettre de motivation"></img><br>
-                            <canvas id="pdfCanvas" width="90%"></canvas>
+                            <canvas id="pdfCanvas" width="90%" style="display:none;"></canvas>
 
                         <?php
                         } else { ?>
-                            <p><button id="submit" style="display:none;" class="download-btn">Utiliser ce CV</button> <button type="button" id="cv_new">Charger un nouveau CV</button></p>
+                            <p><button id="submit" style="display:none;" class="download-btn">Utiliser ce CV</button>
+                                <button type="button" id="cv_new">Charger un nouveau CV</button>
+                            </p>
                             <img id="imagecv" style="display:none;" width=90% alt="Proposez votre CV pour la lettre de motivation"></img><br>
 
                             <canvas id="pdfCanvas" width="90%"></canvas>
@@ -259,12 +261,12 @@ if (isset($_SESSION["user_id"])) {
                         <?php
                         }
                         ?>
-                        <input type="file" value="Fichier" class="cv_input" name="pdf_file" id="pdf_file" accept=".pdf">
-                        <textarea class="cv_input_in" name="cv_input" id="cv_input" rows="7"><?php
-                                                                                                if (isset($_SESSION['cv'])) {
-                                                                                                    echo $_SESSION['cv'];
-                                                                                                }
-                                                                                                ?></textarea>
+                        <input type="file" value="Fichier" class="cv_input" name="pdf_file" id="pdf_file" accept=".pdf" style="display:none;">
+                        <textarea class="cv_input_in" name="cv_input" id="cv_input" rows="7" style="display:none;"><?php
+                                                                                                                    if (isset($_SESSION['cv'])) {
+                                                                                                                        echo $_SESSION['cv'];
+                                                                                                                    }
+                                                                                                                    ?></textarea>
 
 
                     </div>
@@ -331,6 +333,7 @@ if (isset($_SESSION["user_id"])) {
     function valider_cv() {
 
         var canvas = document.getElementById('pdfCanvas');
+        canvas.style.display='';
         // Convertir le canvas en une image PNG en base64
         var imageData = canvas.toDataURL('image/png');
         var submitBtn = document.getElementById('submit');

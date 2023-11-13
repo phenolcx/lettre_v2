@@ -153,7 +153,6 @@ if (!isset($_SESSION['user_id'])) {
     <link href="assets/img/favicon.png" rel="icon">
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
-
     <!-- Vendor CSS Files -->
     <link href="assets/vendor/aos/aos.css" rel="stylesheet">
     <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -192,18 +191,18 @@ if (!isset($_SESSION['user_id'])) {
             echo "pas de cv encore";
         }
     }
-   
+
     if ($_SESSION["user_id"]) {
-        $imagecv = "uploads/" . $_SESSION["user_id"] . "_cv_image.png".
+        $imagecv = "uploads/" . $_SESSION["user_id"] . "_cv_image.png";
         $timestamp = time(); // Obtient le timestamp actuel
         // Ou utilisez rand() pour un nombre aléatoire : $timestamp = rand();
         $imageurl = $imagecv . '?nocache=' . $timestamp;
     }
-                                                
-                                               
+
+
     ?>
     <!-- ======= Hero Section ======= -->
-    <form method="post" enctype="multipart/form-data" action="offre.php" id="file-upload-form">
+    <form method="post" enctype="multipart/form-data" action="genere_lettre.php" id="file-upload-form">
         <section id="hero" class="d-flex align-items-center">
             <div class="container">
                 <div class="row">
@@ -211,8 +210,7 @@ if (!isset($_SESSION['user_id'])) {
                         <div class="container">
                             <div class="form-group">
                                 <div class="file-container">
-                                    <img src=<?php echo $imageurl;?> id="imagecv" width=90% alt="Proposez votre CV pour la lettre de motivation"></img><br>
-
+                                    <img src=<?php echo $imageurl; ?> id="imagecv" width=90% alt="Proposez votre CV pour la lettre de motivation"></img><br>
                                 </div>
                             </div>
                         </div>
@@ -227,11 +225,17 @@ if (!isset($_SESSION['user_id'])) {
                                             <div class="cv-input">
                                                 Copier/Coller ici l'offre d'emploi pour laquelle vous souhaitez postuler
                                                 <div class="container mt-5">
-                                                    <textarea class="offre_input_in" name="text_input" id="text_input" rows="7" required oninvalid="setCustomValidity('Merci de penser à copier/coller votre offre pour mieux cibler la lettre de motivation ! ')" oninput="setCustomValidity('')"></textarea>
-                                                    </textarea>
+                                                    <center><textarea class="offre_input_in" name="offre_input" id="offre_input" rows="12" required oninvalid="setCustomValidity('Merci de penser à copier/coller votre offre pour mieux cibler la lettre de motivation ! ')" oninput="setCustomValidity('')"></textarea>
+                                                    </textarea></center>
+                                                </div>
+                                                <div>
+                                                    <center><button id="submit" class="download-btn"><i class="bi bi-gear"></i>
+                                                            Rédiger ma lettre de motivation</button></center>
                                                 </div>
                                             </div>
                                         </div>
+                                        <textarea class="offre_input_in" name="cv_input" id="cv_input" rows="12" required style="display:none;"><?php echo $_SESSION['cv']; ?></textarea>
+
                                     </div>
 
                                 </div>
