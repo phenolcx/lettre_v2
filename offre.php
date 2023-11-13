@@ -35,7 +35,8 @@ if (isset($_SESSION['user_id'])) {
     $offre_content = "";
     logError("bonne session");
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        if ((isset($_FILES["pdf_file"]) && $_FILES["pdf_file"]["error"] == 0) && $_SESSION["cv"]!="") {
+
+        if ((isset($_FILES["pdf_file"]) && $_FILES["pdf_file"]["error"] == 0)) {
             $pdf_file_path = $_FILES["pdf_file"]["tmp_name"];
 
             $parser = new Parser();
@@ -61,8 +62,21 @@ if (isset($_SESSION['user_id'])) {
                 logError($error);
             }
         } else {
-            $error = "Erreur de fichier : Le fichier PDF n'a pas pu être traité.";
-            logError($error);
+            if ($_SESSION["cv"] != "") {
+                $sql = "delete from cv where  id_user=?";
+                $stmt = mysqli_prepare($conn, $sql);
+                mysqli_stmt_bind_param($stmt, "i", $_SESSION['user_id']);
+                if (!mysqli_stmt_execute($stmt)) {
+                    $error = "Erreur système : Impossible d'enregistrer votre CV et/ou votre lettre de motivation pour le moment.";
+                    logError($error);
+                }
+                $sql1 = "INSERT INTO cv (cv, offres, prompt, id_user) VALUES (?, ?, ?, ?)";
+                $stmt = mysqli_prepare($conn, $sql1);
+                mysqli_stmt_bind_param($stmt, "sssi", $_SESSION["cv"], $offre_content, $text_prompt, $_SESSION['user_id']);
+            } else {
+                $error = "Erreur de fichier : Le fichier PDF n'a pas pu être traité.";
+                logError($error);
+            }
         }
     }
 } else {
@@ -174,50 +188,53 @@ if (!isset($_SESSION['user_id'])) {
 
             if ($row['cv']) {
                 $_SESSION['cv'] = $row['cv'];
-                $imagecv = "uploads/" . $_SESSION["user_id"] . "_cv_image.png";
             }
         } else {
             echo "pas de cv encore";
         }
     }
+    if ($_SESSION["user_id"]) {
+        $imagecv = "uploads/" . $_SESSION["user_id"] . "_cv_image.png";
+    }
+
     ?>
     <!-- ======= Hero Section ======= -->
     <form method="post" enctype="multipart/form-data" action="offre.php" id="file-upload-form">
         <section id="hero" class="d-flex align-items-center">
-            <div class="row">
-                <div class="col-lg-6 d-lg-flex flex-lg-column justify-content-center align-items-stretch " data-aos="fade-up">
-                    <div class="container">
-                        <div class="form-group">
-                            <div class="file-container">
-                                <img src=<?php echo $imagecv; ?> id="imagecv" width=90% alt="Proposez votre CV pour la lettre de motivation"></img><br>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 d-lg-flex flex-lg-column justify-content-center align-items-stretch " data-aos="fade-up">
+                        <div class="container">
+                            <div class="form-group">
+                                <div class="file-container">
+                                    <img src=<?php echo $imagecv; ?> id="imagecv" width=90% alt="Proposez votre CV pour la lettre de motivation"></img><br>
 
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-6 d-lg-flex flex-lg-column justify-content-center align-items-stretch " data-aos="fade-up">
-                    <div class="container">
-                        <div class="form-group">
-                            <div class="file-container">
-                                <div>
-                                    <div class="container mt-5">
+                    <div class="col-lg-6 d-lg-flex flex-lg-column justify-content-center align-items-stretch " data-aos="fade-up">
+                        <div class="container">
+                            <div class="form-group">
+                                <div class="file-container">
+                                    <div>
+                                        <div class="container mt-5">
 
-                                        <div class="cv-input">
-                                            Copier/Coller ici l'offre d'emploi pour laquelle vous souhaitez postuler
-                                            <div class="container mt-5">
-                                                <textarea class="offre_input_in" name="text_input" id="text_input" rows="7" required oninvalid="setCustomValidity('Merci de penser à copier/coller votre offre pour mieux cibler la lettre de motivation ! ')" oninput="setCustomValidity('')"></textarea>
-                                                </textarea>
+                                            <div class="cv-input">
+                                                Copier/Coller ici l'offre d'emploi pour laquelle vous souhaitez postuler
+                                                <div class="container mt-5">
+                                                    <textarea class="offre_input_in" name="text_input" id="text_input" rows="7" required oninvalid="setCustomValidity('Merci de penser à copier/coller votre offre pour mieux cibler la lettre de motivation ! ')" oninput="setCustomValidity('')"></textarea>
+                                                    </textarea>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
 
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </section>
     </form>

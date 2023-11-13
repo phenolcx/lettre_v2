@@ -220,11 +220,13 @@ if (isset($_SESSION["user_id"])) {
 
         if ($row['cv']) {
             $_SESSION['cv'] = $row['cv'];
-            $imagecv = "uploads/" . $_SESSION["user_id"] . "_cv_image.png";
         }
     } else {
         echo "pas de cv encore";
     }
+}
+if (isset($_SESSION["user_id"])) {
+    $imagecv = "uploads/" . $_SESSION["user_id"] . "_cv_image.png";
 }
 ?>
 
@@ -238,7 +240,6 @@ if (isset($_SESSION["user_id"])) {
 
         <section id="hero" class="d-flex align-items-center">
             <div class="container">
-
                 <div class="row">
                     <div class="col-lg-6 d-lg-flex flex-lg-column justify-content-center align-items-stretch pt-5 pt-lg-0 order-1 order-lg-1" data-aos="fade-up">
 
@@ -258,8 +259,12 @@ if (isset($_SESSION["user_id"])) {
                         <?php
                         }
                         ?>
-                        <input type="file" value="Fichier" class="cv_input" name="pdf_file" id="pdf_file" accept=".pdf"  style="display: none;">
-                        <textarea class="cv_input_in" name="cv_input" id="cv_input" rows="7"><?php echo $_SESSION['cv'] ?></textarea>
+                        <input type="file" value="Fichier" class="cv_input" name="pdf_file" id="pdf_file" accept=".pdf" style="display: none;">
+                        <textarea class="cv_input_in" name="cv_input" id="cv_input" rows="7"><?php
+                                                                                                if (isset($_SESSION['cv'])) {
+                                                                                                    echo $_SESSION['cv'];
+                                                                                                }
+                                                                                                ?></textarea>
 
 
                     </div>
@@ -350,7 +355,6 @@ if (isset($_SESSION["user_id"])) {
         submitBtn.style.display = '';
 
     }
-    
 </script>
 
 </html>
